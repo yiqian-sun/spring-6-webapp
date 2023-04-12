@@ -35,21 +35,20 @@ public class BootStrapData implements CommandLineRunner {
         Book bookSava = bookRepository.save(book);
 
         Author Qiang = new Author();
-        author.setFirstName("Yongqiang");
-        author.setLastName("Zuo");
+        Qiang.setFirstName("Yongqiang");
+        Qiang.setLastName("Zuo");
 
         Book book1 = new Book();
-        book.setTitle("When can I find a job");
-        book.setIsbn("000001");
+        book1.setTitle("When can I find a job");
+        book1.setIsbn("000001");
 
         Author qiangSave = authorRepository.save(Qiang);
         Book book1Sava = bookRepository.save(book1);
 
         authorSave.getBooks().add(bookSava);
         qiangSave.getBooks().add(book1Sava);
-
-        authorRepository.save(author);
-        authorRepository.save(qiangSave);
+        bookSava.getAuthors().add(authorSave);
+        book1Sava.getAuthors().add(qiangSave);
 
         Publisher publisher = new Publisher();
         publisher.setAddress("160 pleasant st.");
@@ -61,11 +60,17 @@ public class BootStrapData implements CommandLineRunner {
         bookSava.setPublisher(p);
         book1Sava.setPublisher(p);
 
+        authorRepository.save(authorSave);
+        authorRepository.save(qiangSave);
+        publisherRepository.save(p);
+        bookRepository.save(bookSava);
+        bookRepository.save(book1Sava);
+
+
 
         System.out.println("In bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
         System.out.println("Publisher Count: " + publisherRepository.count());
-        System.out.println(publisher);
     }
 }
